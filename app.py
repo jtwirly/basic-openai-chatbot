@@ -7,17 +7,14 @@ api_key = st.secrets["default"]["OPENAI_API_KEY"]
 # Initialize the OpenAI client with the API key
 client = OpenAI(api_key=api_key)
 
-user = input("What do you want to ask me?")
-
+st.title("Simple Query with OpenAI")
+user_content = st.text_area("Enter your message here", "Hello, what would you like me to do?")
 completion = client.chat.completions.create(
     model="gpt-4o-mini",
     messages=[
         {"role": "system", "content": "You are a helpful assistant."},
-        {
-            "role": "user",
-            "content": user
-        }
+        {"role": "user", "content": user_content}
     ]
 )
 
-print(completion.choices[0].message.content)
+st.write(completion.choices[0].message.content)
